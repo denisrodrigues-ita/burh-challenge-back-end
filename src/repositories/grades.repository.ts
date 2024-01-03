@@ -1,4 +1,5 @@
 import { prisma } from "../services/prisma";
+import { Request } from "express";
 
 export const createGrade = async (data: any) => {
   try {
@@ -18,27 +19,51 @@ export const createGrade = async (data: any) => {
   }
 };
 
-// export const getGrades = async () => {
-//   try {
-//     const engaged = await prisma.engaged.findMany({});
-//     return engaged;
-//   } catch (error) {
-//     throw new Error(error);
-//   } finally {
-//     await prisma.$disconnect();
-//   }
-// };
+export const getGrades = async () => {
+  try {
+    const grades = await prisma.grade.findMany({});
+    return grades;
+  } catch (error) {
+    return error;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
 
-// export const deleteGrade = async (name) => {
-//   try {
-//     const engaged = await prisma.$queryRawUnsafe(
-//       'SELECT * FROM "Engaged" WHERE (groom_name ILIKE $1 OR bride_name ILIKE $1)',
-//       `%${name}%`
-//     );
-//     return engaged;
-//   } catch (error) {
-//     throw new Error(error);
-//   } finally {
-//     await prisma.$disconnect();
-//   }
-// };
+export const deleteGrade = async (req: Request<{ id: string }>) => {
+  try {
+    const { id } = req.params;
+    const parseId = parseInt(id);
+    const grades = await prisma.grade.delete({
+      where: {
+        id: parseId,
+      },
+    });
+    return grades;
+  } catch (error) {
+    return error;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+export const putGrade = async (req: Request<{ id: string }>) => {
+  try {
+    const { id } = req.params;
+    const parseId = parseInt(id);
+
+    const grade = await prisma.grade.update({
+      where: {
+        id: parseId,
+      },
+      data: {
+        nota: req.body.nota,
+      },
+    });
+    return grade;
+  } catch (error) {
+    return error;
+  } finally {
+    await prisma.$disconnect();
+  }
+};
