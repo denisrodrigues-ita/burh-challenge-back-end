@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import {
   createGrade,
-  //   getGrades,
-  //   deleteGrade,
+  getGrades,
+  deleteGrade,
+  putGrade,
 } from "../repositories/grades.repository";
 import { gradesValidation } from "../validations/grades.validation";
 import { GradeBodyProps } from "./grades.interface";
@@ -28,20 +29,44 @@ export const createGradeController = async (
   }
 };
 
-// export const getGradeController = async (req: any, res: any) => {
-//   try {
-//     const engaged = await getGrades();
-//     res.status(200).send(engaged);
-//   } catch (error) {
-//     res.status(400).send(error);
-//   }
-// };
+export const getGradeController = async (res: Response) => {
+  try {
+    const grades = await getGrades();
+    res.status(200).send(grades);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
 
-// export const deleteGradeController = async (req: any, res: any) => {
-//   try {
-//     const engaged = await deleteGrade(req, res);
-//     res.status(200).send(engaged);
-//   } catch (error) {
-//     res.status(400).send(error);
-//   }
-// };
+export const deleteGradeController = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
+  try {
+    const grades = await deleteGrade(req);
+    res.status(200).send(grades);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
+export const putGradeController = async (
+  req: Request<{ id: string }>,
+  res: Response
+) => {
+  try {
+    const { nota } = req.body;
+
+    if (nota > 10)
+      return res
+        .status(400)
+        .send({ message: "Nota não pode ser maior que 10" });
+    if (nota < 0)
+      return res.status(400).send({ message: "Nota não pode ser menor que 0" });
+
+    const grades = await putGrade(req);
+    res.status(200).send(grades);
+  } catch (error) {
+    return error;
+  }
+};

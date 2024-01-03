@@ -22,10 +22,10 @@ enum Disciplina {
 }
 
 model Grade {
-    id      Int      @id @default(autoincrement())
+    id           Int        @id @default(autoincrement())
     bimestre     Bimestre
     disciplina   Disciplina
-    nota         Float
+    nota         Float      
     criadoEm     DateTime   @default(now())
     atualizadoEm DateTime   @updatedAt
 
