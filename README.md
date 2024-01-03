@@ -19,12 +19,17 @@ Para utilizar este projeto, siga os passos abaixo:
 npm run dev
 
 dev: Inicia o projeto em modo de desenvolvimento.
+
 dev:start: Inicia o projeto em modo de desenvolvimento com observação de arquivos.
+
 build: Gera a build do projeto.
 
 # Tecnologias Utilizadas
 # Principais tecnologias e bibliotecas utilizadas.
 TypeScript
+
 Prisma
+
 Express
+
 Yup
