@@ -29,7 +29,7 @@ export const createGradeController = async (
   }
 };
 
-export const getGradeController = async (res: Response) => {
+export const getGradeController = async (req: Request, res: Response) => {
   try {
     const grades = await getGrades();
     res.status(200).send(grades);
