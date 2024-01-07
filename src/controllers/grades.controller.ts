@@ -22,6 +22,11 @@ export const createGradeController = async (
     });
 
     const grade = await createGrade(req.body);
+    if ((grade as { code: string }).code === "P2002") {
+      return res
+        .status(400)
+        .send({ message: "Disciplina e bimestre já lançados" });
+    }
 
     res.status(200).send(grade);
   } catch (error) {

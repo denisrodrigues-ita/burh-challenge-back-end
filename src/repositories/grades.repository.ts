@@ -10,7 +10,7 @@ export const createGrade = async (data: any) => {
         nota: data.nota,
       },
     });
-
+    
     return grade;
   } catch (error) {
     return error;
